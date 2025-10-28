@@ -1,0 +1,31 @@
+dim_Calendar =
+VAR _MinDate =
+    CALCULATE(MIN(tbl_fact[Data]), REMOVEFILTERS())
+VAR _MaxDate =
+    CALCULATE(MAX(tbl_fact[Data]), REMOVEFILTERS())
+VAR _StartDate = DATE(YEAR(_MinDate), MONTH(_MinDate), 1)
+VAR _EndDate = EOMONTH(_MaxDate, 0)
+RETURN
+ADDCOLUMNS(
+    CALENDAR(_StartDate, _EndDate),
+    "Rok", YEAR([Date]),
+    "Miesiac", MONTH([Date]),
+    "Dzien", DAY([Date]),
+    "Kwartał", QUARTER([Date]),
+    "TydzienISO", ISOWEEKNUM([Date]),
+    "NazwaMiesiaca", FORMAT([Date], "mmmm"),
+    "NazwaMiesiacaSkrot", FORMAT([Date], "mmm"),
+    "DzienTygodnia", FORMAT([Date], "dddd"),
+    "DzienTygodniaSkrot", FORMAT([Date], "ddd"),
+    "RokMiesiac", YEAR([Date]) * 100 + MONTH([Date]),
+    "RokTydzien", YEAR([Date]) * 100 + ISOWEEKNUM([Date]),
+    "RokKwartal", YEAR([Date]) * 10 + QUARTER([Date]),
+    "CzyWeekend", IF(WEEKDAY([Date], 2) > 5, TRUE(), FALSE()),
+    "CzyDzis", IF([Date] = TODAY(), TRUE(), FALSE()),
+    "CzyWPrzyszlosci", IF([Date] > TODAY(), TRUE(), FALSE()),
+    "Rok-Kwartał", FORMAT([Date], "YYYY") & "-Q" & QUARTER([Date]),
+    "Rok-MiesiacTekst", FORMAT([Date], "YYYY-MM"),
+    "Rok-MiesiacNazwa", FORMAT([Date], "YYYY") & " " & FORMAT([Date], "mmm"),
+    "SortMiesiac", MONTH([Date]),
+    "SortDzienTygodnia", WEEKDAY([Date], 2)
+)
