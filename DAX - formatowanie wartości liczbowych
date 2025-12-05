@@ -1,0 +1,29 @@
+💡 Wskazówki praktyczne:
+0 – wymusza wyświetlenie cyfry nawet, jeśli jest zerem.
+# – wyświetla cyfrę tylko, jeśli jest niezerowa.
+, – separator tysięcy. Można użyć wielokrotnie dla milionów: #,##0, → tysiące, #,##0,, → miliony.
+% – automatycznie mnoży wartość przez 100.
+Możesz łączyć formaty: np. "$#,##0.00;($#,##0.00)" – kwoty dodatnie normalnie, ujemne w nawiasach.
+
+
+Format	Opis	Przykład liczby: 1234.567	Efekt
+"0"	Liczba całkowita, zaokrągla do najbliższej jednostki	1234.567	1235
+"0.0"	Jedna cyfra po przecinku	1234.567	1234.6
+"0.00"	Dwie cyfry po przecinku	1234.567	1234.57
+"#,##0"	Separatory tysięcy, liczba całkowita	1234.567	1,235
+"#,##0.00"	Separatory tysięcy + dwie cyfry po przecinku	1234.567	1,234.57
+"0%"	Format procentowy, brak miejsc dziesiętnych	0.1234	12%
+"0.0%"	Procent z jedną cyfrą po przecinku	0.1234	12.3%
+"0.00%"	Procent z dwiema cyframi po przecinku	0.1234	12.34%
+"$#,##0"	Waluta z separatorem tysięcy	1234.567	$1,235
+"$#,##0.00"	Waluta z separatorem i dwiema cyframi po przecinku	1234.567	$1,234.57
+"# ?/?"	Ułamek zwykły (1/2, 3/4)	0.75	3/4
+"0.0E+0"	Notacja naukowa	1234.567	1.2E+3
+"00000"	Liczba uzupełniana zerami z lewej strony	123	00123
+"@"	Tekst, nie zmienia wartości	"Test"	Test
+"dd-mm-yyyy"	Data w formacie dzień-miesiąc-rok	2025-12-05	05-12-2025
+"hh:mm:ss"	Godzina, minuta, sekunda	12:34:56	12:34:56
+"General Number"	Domyślny format liczby	1234.567	1234.567
+"Currency"	Domyślny format waluty	1234.567	$1,234.57
+"Percent"	Domyślny procent	0.1234	12%
+"Scientific"	Notacja naukowa	1234.567	1.234567E+03
