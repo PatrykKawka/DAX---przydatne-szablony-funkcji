@@ -1,0 +1,24 @@
+Korelacja = 
+var __muX =calculate(AVERAGE(Arkusz1[X]))
+var __muY=calculate(AVERAGE(Arkusz1[Y]))
+var __numerator  =  sumx(Arkusz1,( Arkusz1[X]-__muX)*(Arkusz1[Y]-__muY))
+var __denominator=  SQRT(sumx(Arkusz1,(Arkusz1[X]-__muX)^2)*sumx(Arkusz1,(Arkusz1[Y]-__muY)^2))
+return
+divide(__numerator,__denominator)
+
+SilaKorelacji = 
+SWITCH(TRUE(),
+
+        [Korelacja]=-1                          ,"Idealna negatywna korelacja",
+        [Korelacja]>-1   &&  [Korelacja]<=-0.8 ,"Bardzo silna negatywna korelacja",
+        [Korelacja]>-0.8 &&  [Korelacja]<=-0.6 ,"Silna negatywna korelacja",
+        [Korelacja]>-0.6 &&  [Korelacja]<=-0.4 ,"Umiarkowana negatyna korelacja",
+        [Korelacja]>-0.4 &&  [Korelacja]<=-0.2 ,"Słaba negatywna korelacja",
+        [Korelacja]>-0.2 &&  [Korelacja]<0     ,"Bardzo słaba negatywna korelacja",
+        [Korelacja]=0                           ,"Brak korelacji",
+        [Korelacja]>0    &&  [Korelacja]<0.2   ,"Bardzo słaba pozytywna korelacja",
+        [Korelacja]>=0.2 &&  [Korelacja]<0.4   ,"Słaba pozytywna korelacja",
+        [Korelacja]>=0.4 &&  [Korelacja]<0.6   ,"Umiarkowana pozytywna korelacja",
+        [Korelacja]>=0.6 &&  [Korelacja]<0.8   ,"Mocna pozytywna korelacja",
+        [Korelacja]>=0.8 &&  [Korelacja]<1     ,"Bardzo mocna pozytywna korelacja",
+        [Korelacja]=1    
