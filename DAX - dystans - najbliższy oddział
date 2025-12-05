@@ -1,0 +1,30 @@
+Najbliższy oddział = 
+VAR _dlugosc = SELECTEDVALUE(CIS[X])
+VAR _szerokosc = SELECTEDVALUE(CIS[Y])
+VAR P = PI() / 180
+VAR R = 6371
+
+-- Oblicz dystans tylko raz dla wszystkich oddziałów
+VAR TabelaZDystansami =
+    ADDCOLUMNS (
+        Struktura_sieci,
+        "Dystans",
+            VAR _dlugosc2 = Struktura_sieci[Długość_geograficzna]
+            VAR _szerokosc2 = Struktura_sieci[Szerokość_geograficzna]
+            VAR deltaLat = (_szerokosc2 - _szerokosc) * P
+            VAR deltaLon = (_dlugosc2 - _dlugosc) * P
+            VAR A = SIN(deltaLat / 2) ^ 2 + COS(_szerokosc * P) * COS(_szerokosc2 * P) * SIN(deltaLon / 2) ^ 2
+            VAR C = 2 * ATAN(SQRT(A) / SQRT(1 - A))
+            RETURN R * C
+    )
+
+-- Wybierz oddział o minimalnym dystansie
+VAR NajblizszyOddzial =
+    TOPN (
+        1,
+        TabelaZDystansami,
+        [Dystans], ASC
+    )
+
+RETURN
+    SELECTCOLUMNS(NajblizszyOddzial, "Oddział", Struktura_sieci[Nazwa_oddziału])
