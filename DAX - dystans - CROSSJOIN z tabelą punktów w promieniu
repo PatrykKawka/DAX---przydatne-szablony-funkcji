@@ -1,0 +1,22 @@
+Oddzialy_Postoje_blisko = 
+
+VAR P = DIVIDE(PI(), 180)
+VAR R = 6371
+
+RETURN
+FILTER(
+    CROSSJOIN('oddziały', 'postoje'),
+    VAR _dlugosc2 = 'oddziały'[GPS dług]
+    VAR _szerokosc2 = 'oddziały'[GPS szerok]
+    VAR _dlugosc = 'postoje'[Długość]
+    VAR _szerokosc = 'postoje'[Szerokość]
+    VAR deltaLat = (_szerokosc2 - _szerokosc) * P
+    VAR deltaLon = (_dlugosc2 - _dlugosc) * P
+    VAR A = 
+        SIN(deltaLat / 2) * SIN(deltaLat / 2) +
+        COS(_szerokosc * P) * COS(_szerokosc2 * P) * SIN(deltaLon / 2) * SIN(deltaLon / 2)
+    VAR C = 2 * ATAN(SQRT(A) / SQRT(1 - A))
+    VAR Distance = R * C
+
+    RETURN Distance <= 0.5
+)
