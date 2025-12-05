@@ -1,0 +1,47 @@
+NajczesciejWystepujacaGodzinaOtwarcia = 
+VAR ValuesList = 
+    { 
+        Placematik[PONIEDZIALEK], 
+        Placematik[WTOREK], 
+        Placematik[SRODA], 
+        Placematik[CZWARTEK], 
+        Placematik[PIATEK]
+    }
+VAR CountedValues = 
+    ADDCOLUMNS(
+        DISTINCT(ValuesList), 
+        "Count", 
+        COUNTAX(FILTER(ValuesList, [Value] = EARLIER([Value])), [Value])
+    )
+VAR MostFrequent = 
+    CALCULATE(
+        MAXX(
+            TOPN(
+                1, 
+                CountedValues, 
+                [Count], DESC
+            ),
+            [Value]
+        )
+    )
+RETURN MostFrequent
+
+
+
+
+LiczbaNajczesciejWystepujacaGodzinaOtwarcia = 
+VAR MostFrequentValue = Placematik[NajczesciejWystepujacaGodzinaOtwarcia]
+RETURN
+    COUNTAX(
+        FILTER(
+            {
+                Placematik[PONIEDZIALEK],
+                Placematik[WTOREK],
+                Placematik[SRODA],
+                Placematik[CZWARTEK],
+                Placematik[PIATEK]
+            },
+            [Value] = MostFrequentValue
+        ),
+        [Value]
+    )
