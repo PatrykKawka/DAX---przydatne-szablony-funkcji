@@ -1,0 +1,4 @@
+VAR CzasWMinutach = MiaraGodzin * 60
+VAR Godziny = INT(DIVIDE(CzasWMinutach, 60))
+VAR Minuty = MOD(CzasWMinutach, 60)
+RETURN FORMAT(Godziny, "00") & "h " & FORMAT(Minuty, "00") & "min"
